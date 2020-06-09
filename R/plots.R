@@ -40,15 +40,37 @@ construct_bargraph_frequency <- function(df, x, y_points, x_scale = 0.1, y_scale
 
 
   # Setup the limits for the y scale
-  figure_5_1_y_upper_limit <- df %>% summarise(`maximum` = max(`freq`)) %>% pull()
+  y_upper_limit <- df %>% summarise(`maximum` = max(`freq`)) %>% pull()
   # Scale it to the nearest 0.5
-  figure_5_1_y_upper_limit <- ceiling(figure_5_1_y_upper_limit / y_scale) * y_scale
+  y_upper_limit <- ceiling(y_upper_limit / y_scale) * y_scale
 
   p <- df %>% ggplot(aes(x = `bin`, text = paste('Bin: ', `bin`,'</br></br>Frequency: ',
                                                  round(`freq` * 100,2), '%', sep=""))) +
     theme_minimal() +
     geom_bar(aes(y = freq), fill = "#7ac143", width = 0.5, stat = "identity") +
-    scale_y_continuous(labels = percent, breaks = seq(0,figure_5_1_y_upper_limit,0.05), limits =
-                         c(0,figure_5_1_y_upper_limit))
+    scale_y_continuous(labels = percent, breaks = seq(0,y_upper_limit, y_scale), limits =
+                         c(0,y_upper_limit))
   return(p)
 }
+
+construct_bargraph <- function(df, x, y, y_points, y_label,  y_scale = 1){
+  x <- sym(x)
+  y <- sym(y)
+
+  # Setup the limits for the y scale
+  y_upper_limit <- df %>% summarise(`maximum` = max(!!y)) %>% pull()
+  # Scale it to the nearest 0.5
+  y_upper_limit <- ceiling(y_upper_limit / y_scale) * y_scale
+
+  y_label <- paste("$",seq(0,y_upper_limit, y_scale), sep="")
+
+  p <- df %>%
+    ggplot(aes(x = !!x, y = !!y, text = paste('Year: ', !!x,'</br></br>$ per cow: ', round(!!y,2)))) +
+    theme_minimal() +
+    geom_bar(aes(y = !!y), fill = "#7ac143", width = 0.5, stat = "identity") +
+    scale_y_continuous(labels =  y_label, breaks = seq(0,y_upper_limit, y_scale), limits =
+                         c(0,y_upper_limit))
+
+  return(p)
+}
+
