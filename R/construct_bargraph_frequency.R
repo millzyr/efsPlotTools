@@ -3,7 +3,6 @@
 #' This function provides a template for producing bargraphs in the Economic Farm Survey that
 #' can be used to display histogram data on a bargraph (expressed as a percentage). Also
 #' includes custom tooltip text that allows this percentage to be shown in HTML output
-#'
 #' @param df The dataset to access data from
 #' @param x The variable to display the distribution of
 #' @param y_points The number of ticks to place on the y axis
@@ -53,24 +52,5 @@ construct_bargraph_frequency <- function(df, x, y_points, x_scale = 0.1, y_scale
   return(p)
 }
 
-construct_bargraph <- function(df, x, y, y_points, y_label,  y_scale = 1){
-  x <- sym(x)
-  y <- sym(y)
 
-  # Setup the limits for the y scale
-  y_upper_limit <- df %>% summarise(`maximum` = max(!!y)) %>% pull()
-  # Scale it to the nearest 0.5
-  y_upper_limit <- ceiling(y_upper_limit / y_scale) * y_scale
-
-  y_label <- paste("$",seq(0,y_upper_limit, y_scale), sep="")
-
-  p <- df %>%
-    ggplot(aes(x = !!x, y = !!y, text = paste('Year: ', !!x,'</br></br>$ per cow: ', round(!!y,2)))) +
-    theme_minimal() +
-    geom_bar(aes(y = !!y), fill = "#7ac143", width = 0.5, stat = "identity") +
-    scale_y_continuous(labels =  y_label, breaks = seq(0,y_upper_limit, y_scale), limits =
-                         c(0,y_upper_limit))
-
-  return(p)
-}
 
