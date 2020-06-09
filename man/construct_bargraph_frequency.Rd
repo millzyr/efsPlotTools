@@ -4,7 +4,7 @@
 \alias{construct_bargraph_frequency}
 \title{Plot a bargraph of frequencies}
 \usage{
-construct_bargraph_frequency(df, x, y_points, x_scale, y_scale = 0.05)
+construct_bargraph_frequency(df, x, y_points, x_scale = 0.1, y_scale = 0.05)
 }
 \arguments{
 \item{df}{The dataset to access data from}
