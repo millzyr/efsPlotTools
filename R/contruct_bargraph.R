@@ -16,14 +16,13 @@ construct_bargraph <- function(df, x, y, y_points, y_label,  y_scale = 1){
   # Scale it to the nearest 0.5
   y_upper_limit <- ceiling(y_upper_limit / y_scale) * y_scale
 
-  y_labels <- paste("$",seq(0,y_upper_limit, y_scale), sep="")
+  y_labels <- paste("$",sprintf(paste("%.",decimal_places(y_scale),"f",sep=""),seq(0,y_upper_limit, y_scale)), sep="")
 
   p <- df %>%
     ggplot(aes(x = !!x_, y = !!y_, text = paste(x,': ', !!x,'</br></br>',y,': ',y_label,round(!!y_,2)))) +
     theme_minimal() +
     geom_bar(aes(y = !!y_), fill = "#7ac143", width = 0.5, stat = "identity") +
-    scale_y_continuous(labels =  y_labels, breaks = seq(0,y_upper_limit, y_scale), accuracy = decimal_places(y_scale),  limits =
-                         c(0,y_upper_limit))
+    scale_y_continuous(labels =  y_labels, breaks = seq(0,y_upper_limit, y_scale),  limits = c(0,y_upper_limit))
 
   return(p)
 }
