@@ -15,10 +15,10 @@ construct_bargraph_frequency(df, x, y_points, x_scale = 0.1, y_scale = 0.05)
 
 \item{x_scale}{Handles the rounding of the bin intervals. For example, 0.1 would set the bin groupings so they occur between two one decimal place numbers}
 
-\item{y_scale}{Handles the rounding of the y axis. Set to 0.05 (or 5%) by default}
-
+\item{y_scale}{Handles the rounding of the y axis. Set to 0.05 (or 5\%) by default}
+}
 \value{
-A ggplot2 object
+p A ggplot2 object
 }
 \description{
 This function provides a template for producing bargraphs in the Economic Farm Survey that
