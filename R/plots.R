@@ -9,7 +9,7 @@
 #' @param y_points The number of ticks to place on the y axis
 #' @param x_scale Handles the rounding of the bin intervals. For example, 0.1 would set the bin groupings so they occur between two one decimal place numbers
 #' @param y_scale Handles the rounding of the y axis. Set to 0.05 (or 5%) by default
-#' @return A ggplot2 object
+#' @return p A ggplot2 object
 #' @export
 construct_bargraph_frequency <- function(df, x, y_points, x_scale = 0.1, y_scale = 0.05){
   x <- sym(x)
