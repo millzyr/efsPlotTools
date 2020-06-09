@@ -1,0 +1,14 @@
+Package: efsPlotTools
+Type: Package
+Title: efsPlotTools
+Version: 0.1.0
+Author: Ryan Mills
+Maintainer: The package maintainer <Ryan.Mills@DairyNZ.co.nz>
+Description: This library provides different plotting functions to reduce boiler code in the Economic Farm Survey Markdown files
+License: GPL?
+Encoding: UTF-8
+LazyData: true
+Imports:
+        dplyr,
+        ggplot2
+RoxygenNote: 7.1.0
