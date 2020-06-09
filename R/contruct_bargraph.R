@@ -8,21 +8,21 @@
 #' @export
 #'
 construct_bargraph <- function(df, x, y, y_points, y_label,  y_scale = 1){
-  x <- sym(x)
-  y <- sym(y)
+  x_ <- sym(x)
+  y_ <- sym(y)
 
   # Setup the limits for the y scale
   y_upper_limit <- df %>% summarise(`maximum` = max(!!y)) %>% pull()
   # Scale it to the nearest 0.5
   y_upper_limit <- ceiling(y_upper_limit / y_scale) * y_scale
 
-  y_label <- paste("$",seq(0,y_upper_limit, y_scale), sep="")
+  y_labels <- paste("$",seq(0,y_upper_limit, y_scale), sep="")
 
   p <- df %>%
-    ggplot(aes(x = !!x, y = !!y, text = paste('Year: ', !!x,'</br></br>$ per cow: ', round(!!y,2)))) +
+    ggplot(aes(x = !!x_, y = !!y_, text = paste(x,': ', !!x,'</br></br>',y,': ',y_label,round(!!y_,2)))) +
     theme_minimal() +
-    geom_bar(aes(y = !!y), fill = "#7ac143", width = 0.5, stat = "identity") +
-    scale_y_continuous(labels =  y_label, breaks = seq(0,y_upper_limit, y_scale), limits =
+    geom_bar(aes(y = !!y_), fill = "#7ac143", width = 0.5, stat = "identity") +
+    scale_y_continuous(labels =  y_labels, breaks = seq(0,y_upper_limit, y_scale), limits =
                          c(0,y_upper_limit))
 
   return(p)
